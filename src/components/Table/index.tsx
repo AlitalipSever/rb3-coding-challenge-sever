@@ -1,7 +1,7 @@
 import {useCallback} from 'react';
-import useGetData from '../hooks/useGetData';
+import useGetData from '../../hooks/useGetData';
 
-function Table() {
+function Index() {
   const {load, data} = useGetData();
 
   const onClick = useCallback(() => load(), [load]);
@@ -30,4 +30,4 @@ function Table() {
   );
 }
 
-export default Table;
+export default Index;

@@ -6,8 +6,6 @@ import ListItemText from '@mui/material/ListItemText';
 import {useState} from 'react';
 import RocketLaunchIcon from '@mui/icons-material/RocketLaunch';
 import Box from '@mui/material/Box';
-import Info from '../../components/Info';
-import Table from '../../components/Table';
 import HomePage from '../../pages/Home';
 import ManualTable from '../../pages/ManualTable';
 
@@ -45,7 +43,7 @@ const Navigation: React.FC = () => {
         </List>
       </Drawer>
       <main>
-        {currentPage === 'Info' && <HomePage />}
+        {currentPage === 'Home' && <HomePage />}
         {currentPage === 'Manual Table' && <ManualTable />}
       </main>
     </div>
