@@ -7,7 +7,7 @@ import {useState} from 'react';
 import RocketLaunchIcon from '@mui/icons-material/RocketLaunch';
 import Box from '@mui/material/Box';
 import HomePage from '../../pages/Home';
-import ManualTable from '../../pages/ManualTable';
+import ManualPage from '../../pages/Manual';
 
 interface MenuItem {
   label: string;
@@ -44,7 +44,7 @@ const Navigation: React.FC = () => {
       </Drawer>
       <main>
         {currentPage === 'Home' && <HomePage />}
-        {currentPage === 'Manual Table' && <ManualTable />}
+        {currentPage === 'Manual Table' && <ManualPage />}
       </main>
     </div>
   );
