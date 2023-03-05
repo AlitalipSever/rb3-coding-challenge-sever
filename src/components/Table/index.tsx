@@ -1,30 +1,35 @@
-import {FC, useCallback} from 'react';
+import {FC, useEffect, useState} from 'react';
 import useGetData from '../../hooks/useGetData';
+import {ArrayOfSerializedData, serializeData} from '../../utils/serializeData';
 
 type Props = {};
 
 const Table: FC<Props> = ({}) => {
   const {fetchPage, data, loading} = useGetData();
+  const [serializedData, setSerializedData] = useState<ArrayOfSerializedData>([]);
 
-  const onClick = useCallback(() => {
-    fetchPage('', '', 100);
+  useEffect(() => {
+    fetchPage();
+    if (data) {
+      const serialized = serializeData(data.allPeople.edges);
+      setSerializedData(serialized);
+    }
   }, [data]);
 
   return (
     <div>
-      <button onClick={onClick}>Load Table Data</button>
       {loading && <div>Loading...</div>}
       {data && (
         <div>
           <table>
             <tbody>
-              {data.allPeople.edges.map((n: any) => (
+              {serializedData.map((n: any) => (
                 <tr>
-                  <td>{n.node.name}</td>
-                  <td>{n.node.birthYear}</td>
-                  <td>{n.node.eyeColor}</td>
-                  <td>{n.node.homeworld.id}</td>
-                  <td>{n.node.filmConnection.name}</td>
+                  <td>{n.name}</td>
+                  <td>{n.birthYear}</td>
+                  <td>{n.eyeColor}</td>
+                  <td>{n.homeworldId}</td>
+                  <td>{n.homeworldName}</td>
                 </tr>
               ))}
             </tbody>
