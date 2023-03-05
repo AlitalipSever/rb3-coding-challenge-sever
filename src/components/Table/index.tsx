@@ -1,6 +1,9 @@
 import {FC, useEffect, useState} from 'react';
 import useGetData from '../../hooks/useGetData';
 import {ArrayOfSerializedData, serializeData} from '../../utils/serializeData';
+import {Paper} from '@mui/material';
+import Box from '@mui/material/Box';
+import {DataGrid, GridColDef} from '@mui/x-data-grid';
 
 type Props = {};
 
@@ -16,27 +19,25 @@ const Table: FC<Props> = ({}) => {
     }
   }, [data]);
 
+  const columns: GridColDef[] = [
+    {field: 'name', headerName: 'name', width: 150},
+    {field: 'birthYear', headerName: 'birth year', width: 150},
+    {field: 'eyeColor', headerName: 'eye color', width: 150},
+    {field: 'hairColor', headerName: 'hair color', width: 150},
+    {field: 'homeworldName', headerName: 'home world', width: 150},
+  ];
+
   return (
-    <div>
-      {loading && <div>Loading...</div>}
-      {data && (
-        <div>
-          <table>
-            <tbody>
-              {serializedData.map((n: any) => (
-                <tr>
-                  <td>{n.name}</td>
-                  <td>{n.birthYear}</td>
-                  <td>{n.eyeColor}</td>
-                  <td>{n.homeworldId}</td>
-                  <td>{n.homeworldName}</td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
-      )}
-    </div>
+    <Paper>
+      <Box>
+        {loading && <div>Loading...</div>}
+        {data && (
+          <div style={{height: 700, width: '100%'}}>
+            <DataGrid rows={serializedData} columns={columns} />
+          </div>
+        )}
+      </Box>
+    </Paper>
   );
 };
 
