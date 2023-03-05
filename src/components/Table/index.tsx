@@ -2,23 +2,16 @@ import {useCallback} from 'react';
 import useGetData from '../../hooks/useGetData';
 
 function Index() {
-  const {load, data} = useGetData();
+  const {fetchPage, data, loading} = useGetData();
 
-  const onClick = useCallback(
-    () =>
-      load({
-        variables: {
-          first: 10,
-          after: '',
-          before: '',
-        },
-      }),
-    [load],
-  );
+  const onClick = useCallback(() => {
+    fetchPage('', '', 100);
+  }, [data]);
 
   return (
     <div>
       <button onClick={onClick}>Load Table Data</button>
+      {loading && <div>Loading...</div>}
       {data && (
         <div>
           <table>

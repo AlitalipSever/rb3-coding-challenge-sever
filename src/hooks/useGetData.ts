@@ -2,7 +2,7 @@ import {getAllPeopleQuery} from '../graphql/getAllPeopleQuery';
 import client from '../graphql/client';
 import {useLazyQuery} from '@apollo/client';
 
-interface Person {
+export interface Person {
   __typename: string;
   id: string;
   birthYear: string;
@@ -47,12 +47,23 @@ interface UseGetDataResult {
   data?: AllPeopleQuery;
   load: (params: {variables?: Record<string, any>}) => void;
   loading: boolean;
+  fetchPage: (after?: string, before?: string, first?: number) => void;
 }
 
 const useGetData = (): UseGetDataResult => {
   const [load, {loading, data}] = useLazyQuery(getAllPeopleQuery, {client});
 
-  return {load, loading, data};
+  const fetchPage = (after = '', before = '', first = 100) => {
+    load({
+      variables: {
+        first: first,
+        after: after,
+        before: before,
+      },
+    });
+  };
+
+  return {load, loading, data, fetchPage};
 };
 
 export default useGetData;
