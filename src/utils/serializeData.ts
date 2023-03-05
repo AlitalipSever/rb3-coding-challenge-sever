@@ -39,5 +39,5 @@ export function serializeData(rows: GridRowsProp | undefined): ArrayOfSerialized
     };
   });
 
-  return <ArrayOfSerializedData>edges;
+  return edges as ArrayOfSerializedData;
 }
