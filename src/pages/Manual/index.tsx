@@ -1,5 +1,5 @@
 import {FC, useEffect, useState} from 'react';
-import {Container, Pagination, Typography} from '@mui/material';
+import {Container, Pagination, Stack, Typography} from '@mui/material';
 import useGetData from '../../hooks/useGetData';
 import {ArrayOfSerializedData, serializeData} from '../../utils/serializeData';
 import AwesomeTable from '../../components/AwesomeTable';
@@ -12,6 +12,9 @@ const ManualPage: FC<Props> = ({}) => {
   const [serializedData, setSerializedData] = useState<ArrayOfSerializedData>([]);
   const [totalPages, setTotalPages] = useState(1);
   const [currentPage, setCurrentPage] = useState(1);
+  const handleChange = (event: React.ChangeEvent<unknown>, value: number) => {
+    setCurrentPage(value);
+  };
 
   useEffect(() => {
     fetchPage();
@@ -23,16 +26,20 @@ const ManualPage: FC<Props> = ({}) => {
   }, [data]);
 
   return (
-    <Container>
+    <Box sx={{backgroundColor: 'white', alignItems: 'center'}}>
       <Typography color={'black'}>Page: {currentPage}</Typography>
-      <Box>{loading && <div>Loading...</div>}</Box>
-      <AwesomeTable
-        serializedData={serializedData}
-        itemsPerPage={ITEMS_PER_PAGE}
-        currentPage={totalPages}
-      />
-      <Pagination count={totalPages} page={currentPage} />
-    </Container>
+      <Stack spacing={2}>
+        <Box>{loading && <div>Loading...</div>}</Box>
+        <AwesomeTable
+          serializedData={serializedData}
+          currentPage={currentPage}
+          itemsPerPage={ITEMS_PER_PAGE}
+        />
+        <Stack spacing={2} sx={{alignItems: 'center'}}>
+          <Pagination count={totalPages} page={currentPage} onChange={handleChange} />
+        </Stack>
+      </Stack>
+    </Box>
   );
 };
 

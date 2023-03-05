@@ -9,8 +9,12 @@ type Props = {
 };
 
 const AwesomeTable: FC<Props> = ({serializedData, itemsPerPage, currentPage}) => {
+  const startIndex = (currentPage - 1) * itemsPerPage;
+  const endIndex = startIndex + itemsPerPage;
+  const tableData = serializedData.slice(startIndex, endIndex);
+
   const AvesomeTableBody = () => {
-    return serializedData.map((n: SerializedData) => (
+    return tableData.map((n: SerializedData) => (
       <TableRow key={n.id}>
         <TableCell>{n.name}</TableCell>
         <TableCell>{n.birthYear}</TableCell>
