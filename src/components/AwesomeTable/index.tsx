@@ -9,8 +9,8 @@ import {
   TableCell,
   TableHead,
   TableRow,
-  Typography,
 } from '@mui/material';
+import {ArrowDropDown, ArrowDropUp} from '@mui/icons-material';
 
 type Props = {
   serializedData: ArrayOfSerializedData;
@@ -93,11 +93,7 @@ const AwesomeTable: FC<Props> = ({serializedData, itemsPerPage, currentPage}) =>
                   {n.label}
                   {sortKey === n.key && (
                     <IconButton size="small">
-                      {sortOrder === 'asc' ? (
-                        <Typography>foo</Typography>
-                      ) : (
-                        <Typography>zoo</Typography>
-                      )}
+                      {sortOrder === 'asc' ? <ArrowDropUp /> : <ArrowDropDown />}
                     </IconButton>
                   )}
                 </TableCell>
