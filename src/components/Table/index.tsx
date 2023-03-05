@@ -4,7 +4,17 @@ import useGetData from '../../hooks/useGetData';
 function Index() {
   const {load, data} = useGetData();
 
-  const onClick = useCallback(() => load(), [load]);
+  const onClick = useCallback(
+    () =>
+      load({
+        variables: {
+          first: 10,
+          after: '',
+          before: '',
+        },
+      }),
+    [load],
+  );
 
   return (
     <div>
