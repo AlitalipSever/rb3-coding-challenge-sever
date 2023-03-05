@@ -1,13 +1,11 @@
-import "./App.css";
-import Info from "./components/Info";
-import Table from "./components/Table";
+import './App.css';
+import Navigation from './containers/Navigation';
 
 function App() {
   return (
     <div className="App">
       <div className="app-container">
-        <Info />
-        <Table />
+        <Navigation />
       </div>
     </div>
   );

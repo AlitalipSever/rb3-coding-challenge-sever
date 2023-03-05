@@ -1,15 +1,14 @@
-import { useCallback } from "react";
-import useGetData from "../hooks/useGetData";
+import {useCallback} from 'react';
+import useGetData from '../hooks/useGetData';
 
 function Table() {
-  const { load, data } = useGetData();
+  const {load, data} = useGetData();
 
   const onClick = useCallback(() => load(), [load]);
 
-  console.log(data);
   return (
     <div>
-      <button onClick={onClick}>Load Tabe Data</button>
+      <button onClick={onClick}>Load Table Data</button>
       {data && (
         <div>
           <table>
