@@ -8,6 +8,8 @@ import RocketLaunchIcon from '@mui/icons-material/RocketLaunch';
 import Box from '@mui/material/Box';
 import Info from '../../components/Info';
 import Table from '../../components/Table';
+import HomePage from '../../pages/Home';
+import ManualTable from '../../pages/ManualTable';
 
 interface MenuItem {
   label: string;
@@ -43,8 +45,8 @@ const Navigation: React.FC = () => {
         </List>
       </Drawer>
       <main>
-        {currentPage === 'Info' && <Info />}
-        {currentPage === 'Manual Table' && <Table />}
+        {currentPage === 'Info' && <HomePage />}
+        {currentPage === 'Manual Table' && <ManualTable />}
       </main>
     </div>
   );
