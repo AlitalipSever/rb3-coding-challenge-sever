@@ -1,5 +1,5 @@
 import {FC, useEffect, useState} from 'react';
-import {Container, Pagination, Stack, Typography} from '@mui/material';
+import {Pagination, Stack, Typography} from '@mui/material';
 import useGetData from '../../hooks/useGetData';
 import {ArrayOfSerializedData, serializeData} from '../../utils/serializeData';
 import AwesomeTable from '../../components/AwesomeTable';
@@ -7,7 +7,7 @@ import Box from '@mui/material/Box';
 
 const ITEMS_PER_PAGE = 10;
 type Props = {};
-const ManualPage: FC<Props> = ({}) => {
+const ManualPage: FC<Props> = () => {
   const {fetchPage, data, loading} = useGetData();
   const [serializedData, setSerializedData] = useState<ArrayOfSerializedData>([]);
   const [totalPages, setTotalPages] = useState(1);
@@ -23,7 +23,7 @@ const ManualPage: FC<Props> = ({}) => {
       setSerializedData(serialized);
       setTotalPages(Math.ceil(serialized.length / ITEMS_PER_PAGE));
     }
-  }, [data]);
+  }, [data, fetchPage]);
 
   return (
     <Box sx={{backgroundColor: 'white', alignItems: 'center'}}>

@@ -7,7 +7,7 @@ import {DataGrid, GridColDef} from '@mui/x-data-grid';
 
 type Props = {};
 
-const Table: FC<Props> = ({}) => {
+const Table: FC<Props> = () => {
   const {fetchPage, data, loading} = useGetData();
   const [serializedData, setSerializedData] = useState<ArrayOfSerializedData>([]);
 
@@ -17,7 +17,7 @@ const Table: FC<Props> = ({}) => {
       const serialized = serializeData(data.allPeople.edges);
       setSerializedData(serialized);
     }
-  }, [data]);
+  }, [data, fetchPage]);
 
   const columns: GridColDef[] = [
     {field: 'name', headerName: 'name', width: 150},
