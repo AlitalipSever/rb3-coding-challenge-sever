@@ -1,36 +1,44 @@
-import {useCallback} from 'react';
+import {FC, useEffect, useState} from 'react';
 import useGetData from '../../hooks/useGetData';
+import {ArrayOfSerializedData, serializeData} from '../../utils/serializeData';
+import {Paper} from '@mui/material';
+import Box from '@mui/material/Box';
+import {DataGrid, GridColDef} from '@mui/x-data-grid';
 
-function Index() {
+type Props = {};
+
+const Table: FC<Props> = ({}) => {
   const {fetchPage, data, loading} = useGetData();
+  const [serializedData, setSerializedData] = useState<ArrayOfSerializedData>([]);
 
-  const onClick = useCallback(() => {
-    fetchPage('', '', 100);
+  useEffect(() => {
+    fetchPage();
+    if (data) {
+      const serialized = serializeData(data.allPeople.edges);
+      setSerializedData(serialized);
+    }
   }, [data]);
 
-  return (
-    <div>
-      <button onClick={onClick}>Load Table Data</button>
-      {loading && <div>Loading...</div>}
-      {data && (
-        <div>
-          <table>
-            <tbody>
-              {data.allPeople.edges.map((n: any) => (
-                <tr>
-                  <td>{n.node.name}</td>
-                  <td>{n.node.birthYear}</td>
-                  <td>{n.node.eyeColor}</td>
-                  <td>{n.node.homeworld.id}</td>
-                  <td>{n.node.filmConnection.name}</td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
-      )}
-    </div>
-  );
-}
+  const columns: GridColDef[] = [
+    {field: 'name', headerName: 'name', width: 150},
+    {field: 'birthYear', headerName: 'birth year', width: 150},
+    {field: 'eyeColor', headerName: 'eye color', width: 150},
+    {field: 'hairColor', headerName: 'hair color', width: 150},
+    {field: 'homeworldName', headerName: 'home world', width: 150},
+  ];
 
-export default Index;
+  return (
+    <Paper>
+      <Box>
+        {loading && <div>Loading...</div>}
+        {data && (
+          <div style={{height: 700, width: '100%'}}>
+            <DataGrid rows={serializedData} columns={columns} />
+          </div>
+        )}
+      </Box>
+    </Paper>
+  );
+};
+
+export default Table;
