@@ -1,4 +1,4 @@
-import {FC} from 'react';
+import {FC, useState} from 'react';
 import {ArrayOfSerializedData, SerializedData} from '../../utils/serializeData';
 import {Container, Paper, Table, TableBody, TableCell, TableHead, TableRow} from '@mui/material';
 
@@ -8,10 +8,15 @@ type Props = {
   itemsPerPage: number;
 };
 
+type SortKeys = 'name' | 'birthYear' | 'eyeColor' | 'homeworldName';
+type SortOrder = 'asc' | 'desc';
+
 const AwesomeTable: FC<Props> = ({serializedData, itemsPerPage, currentPage}) => {
   const startIndex = (currentPage - 1) * itemsPerPage;
   const endIndex = startIndex + itemsPerPage;
   const tableData = serializedData.slice(startIndex, endIndex);
+  const [sortKey, setSortKey] = useState<SortKeys>('birthYear');
+  const [sortOrder, setSortOrder] = useState<SortOrder>('asc');
 
   const AvesomeTableBody = () => {
     return tableData.map((n: SerializedData) => (
