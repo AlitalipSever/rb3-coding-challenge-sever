@@ -1,7 +1,9 @@
-import {useCallback} from 'react';
+import {FC, useCallback} from 'react';
 import useGetData from '../../hooks/useGetData';
 
-function Index() {
+type Props = {};
+
+const Table: FC<Props> = ({}) => {
   const {fetchPage, data, loading} = useGetData();
 
   const onClick = useCallback(() => {
@@ -31,6 +33,6 @@ function Index() {
       )}
     </div>
   );
-}
+};
 
-export default Index;
+export default Table;
