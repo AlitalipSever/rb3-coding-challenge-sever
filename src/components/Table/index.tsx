@@ -1,14 +1,17 @@
 import {useCallback} from 'react';
-import useGetData from '../hooks/useGetData';
+import useGetData from '../../hooks/useGetData';
 
-function Table() {
-  const {load, data} = useGetData();
+function Index() {
+  const {fetchPage, data, loading} = useGetData();
 
-  const onClick = useCallback(() => load(), [load]);
+  const onClick = useCallback(() => {
+    fetchPage('', '', 100);
+  }, [data]);
 
   return (
     <div>
       <button onClick={onClick}>Load Table Data</button>
+      {loading && <div>Loading...</div>}
       {data && (
         <div>
           <table>
@@ -30,4 +33,4 @@ function Table() {
   );
 }
 
-export default Table;
+export default Index;

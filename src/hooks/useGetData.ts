@@ -1,46 +1,69 @@
-import { ApolloClient, InMemoryCache, gql, useLazyQuery } from "@apollo/client";
+import {getAllPeopleQuery} from '../graphql/getAllPeopleQuery';
+import client from '../graphql/client';
+import {useLazyQuery} from '@apollo/client';
 
-import { useMemo } from "react";
+export interface Person {
+  __typename: string;
+  id: string;
+  birthYear: string;
+  created: string;
+  edited: string;
+  name: string;
+  eyeColor: string;
+  hairColor: string;
+  gender: string;
+  height: number;
+  homeworld: {
+    id: string;
+    name: string;
+    climates: string[];
+  };
+}
 
-// initialize a GraphQL client
-const client = new ApolloClient({
-  cache: new InMemoryCache(),
-  uri: "https://swapi-graphql.netlify.app/.netlify/functions/index",
-});
+interface PeopleEdge {
+  cursor?: string;
+  node: Person;
+}
 
-// write a GraphQL query that asks for names and codes for all countries
-const LIST_PEOPLE = gql`
-  {
-    allPeople {
-      edges {
-        node {
-          __typename
-          id
-          name
-          birthYear
-          eyeColor
-          hairColor
-          homeworld {
-            id
-            name
-          }
-          filmConnection {
-            edges {
-              node {
-                id
-              }
-            }
-          }
-        }
-      }
-    }
-  }
-`;
+interface PageInfo {
+  endCursor: string;
+  startCursor: string;
+  hasNextPage: boolean;
+  hasPreviousPage: boolean;
+}
 
-const useGetData = () => {
-  const [load, { loading, data }] = useLazyQuery(LIST_PEOPLE, { client });
-  const result = useMemo(() => ({ data, load }), [data, load]);
-  return result;
+interface PeopleConnection {
+  edges: PeopleEdge[];
+  pageInfo?: PageInfo;
+  people: [Person];
+  totalCount: number;
+}
+
+interface AllPeopleQuery {
+  allPeople: PeopleConnection;
+}
+
+interface UseGetDataResult {
+  data?: AllPeopleQuery;
+  load: (params: {variables?: Record<string, any>}) => void;
+  loading: boolean;
+  fetchPage: (after?: string, before?: string, first?: number) => void;
+}
+
+const useGetData = (): UseGetDataResult => {
+  const [load, {loading, data}] = useLazyQuery(getAllPeopleQuery, {client});
+
+  const fetchPage = (after = '', before = '', first = 100) => {
+    load({
+      variables: {
+        first: first,
+        after: after,
+        before: before,
+      },
+    });
+  };
+
+  return {load, loading, data, fetchPage};
 };
 
 export default useGetData;
